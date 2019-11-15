@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 const url = "mongodb://localhost/blogApp"
 
-const homeRoutes = require ("./routes/home")
+const homeRoutes = require ("./routes/socio")
 
 //app configuration
 app.use(express.static(__dirname + "/public"));

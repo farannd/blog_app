@@ -11,19 +11,23 @@
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque eius, nobis suscipit, repellat debitis optio recusandae excepturi eaque commodi, vel officia! Laborum, fugit. Cumque accusamus nihil quidem, odio perferendis facere.</p>
             <div class="row">
                 <div class="col">
-                    <a href="#" class="btn btn-primary">New Post</a>
+                    <a href="/socio/new" class="btn btn-primary">New Post</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-3">
             <p>Sidebar</p>
         </div>
         <div class="col-md-9">
-            <p>post</p>
+            <% post.forEach((event)=>{ %>
+                <h3><%= event.title %></h3>
+                <img src="<%= event.image %>" alt="image">
+                <p><%= event.description.slice(0,100) %></p>
+            <% }) %>
         </div>
     </div>
 </div>
