@@ -11,12 +11,12 @@ router.get("/socio",(req,res)=>{
     })
 })
 
-//show form new post
+//new post form
 router.get("/socio/new",(req,res)=>{
     res.render("socio/new");
 });
 
-//create
+//create post
 router.post("/socio",(req,res)=>{
     Socio.create(req.body.post,(err,result)=>{
         if(err){
@@ -32,6 +32,29 @@ router.post("/socio",(req,res)=>{
 router.get("/socio/:id_post",(req,res)=>{
     Socio.findById(req.params.id_post,(err,post)=>{
         res.render("socio/show",{post:post});
+    })
+})
+
+//edit form
+router.get("/socio/:id_post/edit",(req,res)=>{
+    Socio.findById(req.params.id_post,(err,post)=>{
+        res.render("socio/edit",{post:post});
+    });
+});
+
+//update post
+router.put("/socio/:id_post",(req,res)=>{
+    let idPost = req.params.id_post
+    Socio.findByIdAndUpdate(idPost,req.body.post,(err,post)=>{
+        res.redirect("/socio/" + idPost);
+    })
+});
+
+//delete post
+router.delete("/socio/:id_post",(req,res)=>{
+    let idPost = req.params.id_post;
+    Socio.findByIdAndDelete(idPost,(err,result)=>{
+        res.redirect("/socio");
     })
 })
 

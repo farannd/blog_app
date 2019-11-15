@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+<div class="container px-5">
+    <h1 class="text-center">New Post</h1>
+    <form method="POST" action="/socio/<%= post._id %>?_method=PUT">
+        <div class="form-group">
+            <label for="newTitle">Title</label>
+            <input id="newTitle" type="text" class="form-control" name="post[title]" value="<%= post.title %>" required>
+        </div>
+        <div class="form-group">
+            <label for="newImage">Image URL</label>
+            <input id="newImage" type="text" class="form-control" name="post[image]" value="<%= post.image %>" required>
+        </div>
+        <div class="form-group">
+            <label for="newDescription">Description Put Here</label>
+            <textarea name="post[description]" class="form-control" id="newDescription" required cols="30" rows="10"><%= post.description %></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<% include ../partials/footer %>
