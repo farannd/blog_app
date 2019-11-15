@@ -1,12 +1,15 @@
+//package requirements
 const express = require ("express");
 const mongoose = require ("mongoose");
 const bodyParser = require ("body-parser");
 const methodOverride = require ("method-override");
 const app = express();
 const port = 3000;
-const url = "mongodb://localhost/blogApp"
+const url = "mongodb://localhost/blogApp";
 
-const homeRoutes = require ("./routes/socio")
+//routes requirement
+const socioRoutes = require ("./routes/socio");
+const commentRoutes = require ("./routes/comment");
 
 //app configuration
 app.use(express.static(__dirname + "/public"));
@@ -23,7 +26,8 @@ mongoose.connect(url,{
 });
 
 //routes configuration
-app.use(homeRoutes);
+app.use(socioRoutes);
+app.use(commentRoutes);
 
 app.get("/",(req,res)=>{
     res.render("index");

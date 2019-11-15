@@ -7,13 +7,26 @@
             <p class="text-center">sidebar</p>
         </div>
         <div class="col-md-9">
-            <h1><%= post.title %></h1>
-            <img src="<%= post.image %>" alt="">
-            <p><%= post.description %></p>
-            <a href="/socio/<%= post._id %>/edit" class="btn btn-success">Edit</a>
-            <form action="/socio/<%= post._id %>?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+            <div class="container-fluid">
+                <h1><%= post.title %></h1>
+                <img src="<%= post.image %>" alt="">
+                <p><%= post.description %></p>
+                <a href="/socio/<%= post._id %>/edit" class="btn btn-success">Edit</a>
+                <form action="/socio/<%= post._id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            <div class="container-fluid">
+                <h3>Comment</h3>
+                <a href="/socio/<%= post._id %>/comment/new" class="btn btn-primary">New Comment</a>
+                <% post.comment.forEach((event)=>{ %>
+                    <p><%= event.text %></p>
+                    <a href="/socio/<%= post._id %>/comment/<%= event._id %>" class="btn btn-success">Edit</a>
+                    <form action="/socio/<%= post._id %>/comment?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                <% }) %>
+            </div>
         </div>
     </div>
 </div>

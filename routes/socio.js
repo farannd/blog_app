@@ -7,7 +7,11 @@ const Socio = require("../models/socio")
 //index
 router.get("/socio",(req,res)=>{
     Socio.find({},(err,post)=>{
-        res.render("socio/index",{post:post});
+        if(err){
+            console.log(err);
+        } else{
+            res.render("socio/index",{post:post});
+        }
     })
 })
 
@@ -21,8 +25,7 @@ router.post("/socio",(req,res)=>{
     Socio.create(req.body.post,(err,result)=>{
         if(err){
             console.log(err);
-        }
-        else{
+        } else{
             res.redirect("/socio");
         }
     })
@@ -30,15 +33,23 @@ router.post("/socio",(req,res)=>{
 
 //show post in new page
 router.get("/socio/:id_post",(req,res)=>{
-    Socio.findById(req.params.id_post,(err,post)=>{
-        res.render("socio/show",{post:post});
+    Socio.findById(req.params.id_post).populate("comment").exec((err,post)=>{
+        if(err){
+            console.log(err)
+        } else{
+            res.render("socio/show",{post:post});
+        }
     })
 })
 
 //edit form
 router.get("/socio/:id_post/edit",(req,res)=>{
     Socio.findById(req.params.id_post,(err,post)=>{
-        res.render("socio/edit",{post:post});
+        if(err){
+            console.log(err);
+        } else{
+            res.render("socio/edit",{post:post});
+        }
     });
 });
 
@@ -46,7 +57,11 @@ router.get("/socio/:id_post/edit",(req,res)=>{
 router.put("/socio/:id_post",(req,res)=>{
     let idPost = req.params.id_post
     Socio.findByIdAndUpdate(idPost,req.body.post,(err,post)=>{
-        res.redirect("/socio/" + idPost);
+        if(err){
+            console.log(err);
+        } else{
+            res.redirect("/socio/" + idPost);
+        }
     })
 });
 
@@ -54,7 +69,11 @@ router.put("/socio/:id_post",(req,res)=>{
 router.delete("/socio/:id_post",(req,res)=>{
     let idPost = req.params.id_post;
     Socio.findByIdAndDelete(idPost,(err,result)=>{
-        res.redirect("/socio");
+        if(err){
+            console.log(err);
+        } else{
+            res.redirect("/socio");
+        }
     })
 })
 
