@@ -1,0 +1,17 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-md-block col-md-3">
+            <p class="text-center">sidebar</p>
+        </div>
+        <div class="col-md-9">
+            <h1><%= post.title %></h1>
+            <img src="<%= post.image %>" alt="">
+            <p><%= post.description %></p>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

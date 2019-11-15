@@ -23,10 +23,16 @@ router.post("/socio",(req,res)=>{
             console.log(err);
         }
         else{
-            res.render("socio/index");
+            res.redirect("/socio");
         }
     })
 });
 
+//show post in new page
+router.get("/socio/:id_post",(req,res)=>{
+    Socio.findById(req.params.id_post,(err,post)=>{
+        res.render("socio/show",{post:post});
+    })
+})
 
 module.exports = router; 
