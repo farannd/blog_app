@@ -21,8 +21,8 @@
                 <a href="/socio/<%= post._id %>/comment/new" class="btn btn-primary">New Comment</a>
                 <% post.comment.forEach((event)=>{ %>
                     <p><%= event.text %></p>
-                    <a href="/socio/<%= post._id %>/comment/<%= event._id %>" class="btn btn-success">Edit</a>
-                    <form action="/socio/<%= post._id %>/comment?_method=DELETE" method="POST">
+                    <a href="/socio/<%= post._id %>/comment/<%= event._id %>/edit" class="btn btn-success">Edit</a>
+                    <form action="/socio/<%= post._id %>/comment/<%= event._id %>?_method=DELETE" method="POST">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 <% }) %>
