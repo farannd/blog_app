@@ -58,10 +58,17 @@ app.use(socioRoutes);
 app.use(commentRoutes);
 app.use(userRoutes);
 
+//landing page
 app.get("/",(req,res)=>{
     res.render("index");
 })
 
+//404
+app.get("*",(req,res)=>{
+	res.send("URL NOT FOUND");
+})
+
+//server listening config
 app.listen(port,()=>{
     console.log("app is listening");
 })

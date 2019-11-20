@@ -24,7 +24,7 @@
                 </li>
                 <% }else{ %>
                 <li class="nav-item">
-                    <a href="/profile" class="nav-item">Signed in As </a>
+                    <a href="/profile/<%= currentUser._id %>" class="nav-link">Signed in As <%= currentUser.username %> </a>
                 </li>
                 <li class="nav-item">
                         <a href="/logout" class="nav-link">Log Out</a>
