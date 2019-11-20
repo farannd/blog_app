@@ -6,6 +6,7 @@ const methodOverride = require ("method-override");
 const passport = require ("passport");
 const LocalStrategy = require ("passport-local");
 const session = require ("express-session");
+const flash = require ("connect-flash");
 
 //general
 const app = express();
@@ -24,6 +25,7 @@ const User = require ("./models/user");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
+app.use(flash());
 app.set("view engine", "ejs");
 
 //mongoose configuration
@@ -36,10 +38,10 @@ mongoose.connect(url,{
 
 //authentication configurration
 app.use(session({
-	secret: "cinta ini membunuhku",
+	secret: "kepoin aja",
 	resave: false,
 	saveUninitialized: false
-}));
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,6 +52,8 @@ passport.deserializeUser(User.deserializeUser());
 //middleware
 app.use((req,res,next)=>{
 	res.locals.currentUser = req.user;
+	res.locals.success = req.flash("success");
+	res.locals.error = req.flash("error");
 	next();
 })
 
