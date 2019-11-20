@@ -34,3 +34,19 @@
         </div>
     </nav>
 </div>
+
+<% if(success && success.lenght>0 ){ %>
+<div class="alert alert-success" role="alert">
+    <%= success %>
+</div>
+<% } %>
+<% if(warning && warning.lenght>0){ %>
+<div class="alert alert-success" role="alert">
+    <%= warning %>
+</div>
+<% } %>
+<% if (error && error.lenght>0){ %>
+<div class="alert alert-success" role="alert">
+    <%= error %>
+</div>
+<% } %>
