@@ -1,12 +1,12 @@
 <% include ../partials/header %>
 <% include ../partials/navbar %>
 
-<div class="container-fluid mb-5">
+<div class="container-fluid mb-5 darkBackground">
     <div class="row">
         <div class="d-none d-md-block col-md-4">
             <img src="/images/homeLogo.png" alt="home logo" class="img-fluid imageCenter">
         </div>
-        <div class="col-md-8 p-2 text-left">
+        <div class="col-md-8 pr-5 text-left">
             <h1>Welcome to Socio!</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque eius, nobis suscipit, repellat debitis optio recusandae excepturi eaque commodi, vel officia! Laborum, fugit. Cumque accusamus nihil quidem, odio perferendis facere.</p>
             <div class="row">
@@ -17,17 +17,20 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid mb-5">
     <div class="row text-center">
         <div class="d-none d-md-block col-md-3 px-3">
             <p>Sidebar</p>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8 mb-5">
             <% post.forEach((event)=>{ %>
-                <h3><%= event.title %></h3>
-                <img src="<%= event.image %>" alt="image">
-                <p><%= event.description.slice(0,100) %></p>
-                <a href="/socio/<%= event._id %>" class="btn btn-primary">More Info</a>
+                <div class="mb-5">
+                    <h3><%= event.title %></h3>
+                    <img src="<%= event.image %>" class="imageCenter imageIndex" alt="image">
+                    <p class="text-center"><%= event.description.slice(0,250) %> ... </p>
+                    <p class="text-right">- <%= event.author.username %></p>
+                    <a href="/socio/<%= event._id %>" class="btn btn-primary text-center">More Info</a>
+                </div>
             <% }) %>
         </div>
     </div>

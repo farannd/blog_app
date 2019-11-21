@@ -10,7 +10,7 @@ const Comment = require("../models/comment");
 router.get("/socio",(req,res)=>{
     Socio.find({},(err,post)=>{
         if(err || !post){
-            req.flash("warning", "There is problem with our database. Sorry for the inconvenience");
+            req.flash("warning", err.message);
             return res.redirect("*");
         } else{
             return res.render("socio/index",{post:post});
@@ -49,7 +49,7 @@ router.post("/socio",middleware.isLoggedIn,(req,res)=>{
 router.get("/socio/:id_post",(req,res)=>{
     Socio.findById(req.params.id_post).populate("comment").exec((err,post)=>{
         if(err || !post){
-            req.flash("warning", "Post is not found. Please try again")
+            req.flash("warning", err.message)
             return res.redirect("/socio")
         } else{
             return res.render("socio/show",{post:post});
@@ -61,7 +61,7 @@ router.get("/socio/:id_post",(req,res)=>{
 router.get("/socio/:id_post/edit",middleware.checkPostOwnership,(req,res)=>{
     Socio.findById(req.params.id_post,(err,post)=>{
         if(err || !post){
-            req.flash("warning","Post is not found. Please try again")
+            req.flash("warning",err.message)
             return res.redirect("/socio")
         } else{
             return res.render("socio/edit",{post:post});
@@ -83,7 +83,7 @@ router.put("/socio/:id_post",middleware.checkPostOwnership,(req,res)=>{
     })
 });
 
-//cascade delete post and comment associated
+//cascade delete post and comment associated with it
 router.delete("/socio/:id_post",middleware.checkPostOwnership,(req,res)=>{
     let idPost = req.params.id_post;
     Socio.findById(idPost,(err,foundPost)=>{

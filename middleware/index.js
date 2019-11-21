@@ -2,16 +2,19 @@ const User = require ("../models/user");
 const Socio = require ("../models/socio");
 
 var middleware = {
+    //check if user logged in
     isLoggedIn: (req,res,next)=>{
         if(req.isAuthenticated()) return next();
         req.flash("warning","You must log in first to use this features");
         return res.redirect("/login");
     },
+    //check if user logged out
     isLoggedOut: (req,res,next)=>{
         if(!req.isAuthenticated()) return next();
         req.flash("warning","You already logged in");
         return res.redirect("/socio")
     },
+    //check authorization for post
     checkPostOwnership: (req,res,next)=>{
         if(req.isAuthenticated()){
             let idPost = req.params.id_post;
@@ -32,6 +35,7 @@ var middleware = {
         }
         
     },
+    //check authorization for comment
     checkCommentOwnership: (req,res,next)=>{
         if(req.isAuthenticated()){
             let idPost = req.params.id_post;

@@ -6,3 +6,11 @@ body{
     display: block;
     margin: 0 auto;
 }
+
+.imageIndex{
+    width: 80%;
+}
+
+.darkBackground{
+    background-color: #f7f7f7;
+}

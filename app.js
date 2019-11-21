@@ -49,7 +49,7 @@ app.use(methodOverride("_method"));
 app.use(flash());
 app.set("view engine", "ejs");
 
-//middleware
+//routes configuration
 app.use((req,res,next)=>{
 	res.locals.currentUser = req.user;
 	res.locals.success = req.flash("success");
@@ -57,8 +57,6 @@ app.use((req,res,next)=>{
 	res.locals.warning = req.flash("warning");
 	next();
 })
-
-//routes configuration
 app.use(socioRoutes);
 app.use(commentRoutes);
 app.use(userRoutes);
