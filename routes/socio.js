@@ -11,15 +11,16 @@ router.get("/socio",(req,res)=>{
     Socio.find({},(err,post)=>{
         if(err || !post){
             req.flash("warning", "There is problem with our database. Sorry for the inconvenience");
+            return res.redirect("*");
         } else{
-            res.render("socio/index",{post:post});
+            return res.render("socio/index",{post:post});
         }
     })
 })
 
 //new post form
 router.get("/socio/new",middleware.isLoggedIn,(req,res)=>{
-    res.render("socio/new");
+    return res.render("socio/new");
 });
 
 //create post
@@ -36,9 +37,10 @@ router.post("/socio",middleware.isLoggedIn,(req,res)=>{
     Socio.create(post,(err,result)=>{
         if(err || !result){
             req.flash("warning","There is something wrong. Please try again")
+            return res.redirect("/socio");
         } else{
             req.flash("success","You successfully created a new post")
-            res.redirect("/socio");
+            return res.redirect("/socio");
         }
     })
 });
@@ -48,8 +50,9 @@ router.get("/socio/:id_post",(req,res)=>{
     Socio.findById(req.params.id_post).populate("comment").exec((err,post)=>{
         if(err || !post){
             req.flash("warning", "Post is not found. Please try again")
+            return res.redirect("/socio")
         } else{
-            res.render("socio/show",{post:post});
+            return res.render("socio/show",{post:post});
         }
     })
 })
@@ -58,9 +61,10 @@ router.get("/socio/:id_post",(req,res)=>{
 router.get("/socio/:id_post/edit",middleware.checkPostOwnership,(req,res)=>{
     Socio.findById(req.params.id_post,(err,post)=>{
         if(err || !post){
-            console.log(err);
+            req.flash("warning","Post is not found. Please try again")
+            return res.redirect("/socio")
         } else{
-            res.render("socio/edit",{post:post});
+            return res.render("socio/edit",{post:post});
         }
     });
 });
@@ -70,10 +74,11 @@ router.put("/socio/:id_post",middleware.checkPostOwnership,(req,res)=>{
     let idPost = req.params.id_post
     Socio.findByIdAndUpdate(idPost,req.body.post,(err,post)=>{
         if(err){
-            console.log(err);
+            req.flash("warning", err.message);
+            return res.redirect("/socio/" + idPost);
         } else{
             req.flash("success", "You successfully updated your post");
-            res.redirect("/socio/" + idPost);
+            return res.redirect("/socio/" + idPost);
         }
     })
 });
@@ -82,8 +87,9 @@ router.put("/socio/:id_post",middleware.checkPostOwnership,(req,res)=>{
 router.delete("/socio/:id_post",middleware.checkPostOwnership,(req,res)=>{
     let idPost = req.params.id_post;
     Socio.findById(idPost,(err,foundPost)=>{
-        if(err){
-            console.log(err);
+        if(err || !foundPost){
+            req.flash("warning",err.message);
+            return res.redirect("/socio/" + idPost);
         } else{
             let commentLength = foundPost.comment.length;
             for(let i=0;i<commentLength;i++){
@@ -93,7 +99,7 @@ router.delete("/socio/:id_post",middleware.checkPostOwnership,(req,res)=>{
             }
             foundPost.deleteOne();
             req.flash("error","You successfully deleted your post");
-            res.redirect("/socio");
+            return res.redirect("/socio");
         }
     })
 })

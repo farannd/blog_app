@@ -5,12 +5,12 @@ var middleware = {
     isLoggedIn: (req,res,next)=>{
         if(req.isAuthenticated()) return next();
         req.flash("warning","You must log in first to use this features");
-        res.redirect("/login");
+        return res.redirect("/login");
     },
     isLoggedOut: (req,res,next)=>{
         if(!req.isAuthenticated()) return next();
         req.flash("warning","You already logged in");
-        res.redirect("/socio")
+        return res.redirect("/socio")
     },
     checkPostOwnership: (req,res,next)=>{
         if(req.isAuthenticated()){
@@ -18,17 +18,17 @@ var middleware = {
             Socio.findById(idPost,(err,foundPost)=>{
                 if(err || !foundPost){
                     req.flash("warning","Post is not found")
-                    res.redirect("/socio");
+                    return res.redirect("/socio");
                 } else if(foundPost.author.id.equals(req.user._id)){
                     next();
                 } else{
                     req.flash("warning","You don't have permission to make a change on this post");
-                    res.redirect("/socio");
+                    return res.redirect("/socio");
                 }
             })
         } else{
             req.flash("warning","You must log in first to use this features");
-            res.redirect("/login");
+            return res.redirect("/login");
         }
         
     },
@@ -39,17 +39,17 @@ var middleware = {
             Comment.findById(idComment,(err,foundComment)=>{
                 if(err || !foundComment){
                     req.flash("warning","Comment is not found");
-                    res.redirect("/socio/" + idPost);
+                    return res.redirect("/socio/" + idPost);
                 } else if(foundComment.author.id.equals(req.user._id)){
                     next();
                 } else{
                     req.flash("warning","You don't have permission to make a change on this post");
-                    res.redirect("/socio/" + idPost);
+                    return res.redirect("/socio/" + idPost);
                 }
             })
         } else{
             req.flash("warning","You must log in first to use this features");
-            res.redirect("/login");
+            return res.redirect("/login");
         }
     }
 }

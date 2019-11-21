@@ -35,18 +35,21 @@
     </nav>
 </div>
 
-<% if(success && success.lenght>0 ){ %>
-<div class="alert alert-success" role="alert">
-    <%= success %>
+<div class="container">
+    <% if(success && success.length>0 ){ %>
+    <div class="alert alert-success" role="alert">
+        <%= success %>
+    </div>
+    <% } %>
+    <% if(warning && warning.length>0){ %>
+    <div class="alert alert-success" role="alert">
+        <%= warning %>
+    </div>
+    <% } %>
+    <% if (error && error.length>0){ %>
+    <div class="alert alert-success" role="alert">
+        <%= error %>
+    </div>
+    <% } %>
 </div>
-<% } %>
-<% if(warning && warning.lenght>0){ %>
-<div class="alert alert-success" role="alert">
-    <%= warning %>
-</div>
-<% } %>
-<% if (error && error.lenght>0){ %>
-<div class="alert alert-success" role="alert">
-    <%= error %>
-</div>
-<% } %>
+
