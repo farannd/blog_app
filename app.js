@@ -10,7 +10,6 @@ const flash = require('connect-flash');
 
 //general
 const app = express();
-const port = process.env.PORT || 3000;
 const url = process.env.DATABASEURL;
 
 //routes requirement
@@ -74,6 +73,6 @@ app.get('*', (req, res) => {
 });
 
 //server listening config
-app.listen(port, process.env.IP, () => {
+app.listen(process.env.PORT, process.env.IP, () => {
 	console.log('app is listening');
 });
