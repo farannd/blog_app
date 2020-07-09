@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+<div class="container px-5">
+    <h1 class="text-center">Forgot Your Password</h1>
+    <form method="POST" action="/forgot">
+        <div class="form-group"> 
+            <label for="usernameReg">Your email</label>
+            <input id="usernameReg" type="text" class="form-control" name="email" placeholder="Email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<% include ../partials/footer %>

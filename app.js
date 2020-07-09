@@ -7,10 +7,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
 const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
 
-//general
+//general config
 const app = express();
-const url = process.env.DATABASEURL;
+require('dotenv').config();
 
 //routes requirement
 const socioRoutes = require('./routes/socio');
@@ -21,6 +22,7 @@ const userRoutes = require('./routes/user');
 const User = require('./models/user');
 
 //mongoose configuration
+const url = process.env.DBURL;
 mongoose.connect(url, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -28,7 +30,7 @@ mongoose.connect(url, {
 	useCreateIndex: true
 });
 
-//authentication configurration
+//session configuration
 app.use(
 	session({
 		secret: 'kepoin aja',
@@ -36,12 +38,6 @@ app.use(
 		saveUninitialized: false
 	})
 );
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 //general app configuration
 app.use(express.static(__dirname + '/public'));
@@ -49,8 +45,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(flash());
 app.set('view engine', 'ejs');
+app.use(cookieParser('secret'));
 
-//routes configuration
+//authentication configurration
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//parameter yang akan dioper ke ejs
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
@@ -58,6 +63,8 @@ app.use((req, res, next) => {
 	res.locals.warning = req.flash('warning');
 	next();
 });
+
+//routes configuration
 app.use(socioRoutes);
 app.use(commentRoutes);
 app.use(userRoutes);
